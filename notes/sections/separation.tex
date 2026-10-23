@@ -1,0 +1,29 @@
+\section{Separation}\label{sec:separation}
+
+\begin{definition}[Confusable family]\label{def:confusable}
+$P_X$ on $\mathcal X$, $f_1,\dots,f_N:\mathcal X\to\mathcal Y$, $N\ge2$.
+Task $P_\theta$ draws $X\sim P_X$ and sets $Y=f_\theta(X)$.
+The family is $2\Delta$-separated if $P_X(f_\theta\ne f_{\theta'})\ge2\Delta$ for $\theta\ne\theta'$.
+\end{definition}
+
+\begin{lemma}\label{lem:confusable}
+In a $2\Delta$-separated family every $r$ has $R_{P_\theta}(r)<\Delta$ for at most one $\theta$.
+\end{lemma}
+
+\begin{proposition}[Lower bound]\label{prop:lower-bound}
+Every data-independent $r_H$ satisfies $\max_\theta R_{P_\theta}(r_H)\ge\Delta$ and $N^{-1}\sum_\theta\mathbb E\,R_{P_\theta}(r_H)\ge(1-1/N)\Delta$.
+\end{proposition}
+
+\begin{assumption}[LLM identifies the task]\label{ass:identifies}
+There exist $\varepsilon_0\in[0,\Delta)$, $p>0$, $n_0$ such that for every $\theta$ and $n_1\ge n_0$, with probability at least $1-\delta/3$ over $S_1\sim P_\theta^{n_1}$, $Q(\{r:R_{P_\theta}(r)\le\varepsilon_0\}\mid S_1)\ge p$.
+\end{assumption}
+
+\begin{theorem}[Separation]\label{thm:separation}
+Under Definition~\ref{def:confusable} and Assumption~\ref{ass:identifies}, let $n_1\ge n_0$ and $k\ge p^{-1}\log(3/\delta)$.
+For every data-independent $r_H$ there exists $\theta$ such that with probability at least $1-\delta$, $R_{P_\theta}(r_H)-R_{P_\theta}(\hat r)\ge\Delta-\varepsilon_0-\varepsilon_m(k,\delta/3)$.
+\end{theorem}
+% TODO(check): if r_H is random, the task theta with R_{P_theta}(r_H) >= Delta depends on the realisation of r_H.
+% The statement then needs theta chosen after r_H (conditionally on r_H), or the averaged form of Proposition prop:lower-bound.
+
+The content of the theorem sits in Assumption~\ref{ass:identifies}.
+That assumption is a statement about the LLM as a learner.

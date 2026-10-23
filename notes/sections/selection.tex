@@ -1,0 +1,17 @@
+\section{Selection}\label{sec:selection}
+
+\begin{proposition}[Selection]\label{prop:selection}
+With probability at least $1-\delta$, $R_P(\hat r)\le\min_j R_P(r_j)+\varepsilon_m(k,\delta)$.
+\end{proposition}
+
+\begin{corollary}[Human prompt in the pool]\label{cor:human-in-pool}
+If $r_H$ is added to the candidates, $R_P(\hat r)\le R_P(r_H)+\varepsilon_m(k+1,\delta)$ with probability at least $1-\delta$.
+\end{corollary}
+
+\begin{proposition}[Competitiveness through proposal mass]\label{prop:competitiveness}
+Fix $\eta\ge0$ and $A_\eta=\{r:R_P(r)\le R_P(r_H)+\eta\}$.
+Assume $Q(A_\eta\mid S_1)\ge p>0$ with probability at least $1-\delta/3$.
+If $k\ge p^{-1}\log(3/\delta)$ then with probability at least $1-\delta$, $R_P(\hat r)\le R_P(r_H)+\eta+\varepsilon_m(k,\delta/3)$.
+\end{proposition}
+
+The procedure does not need to know $r_H$.

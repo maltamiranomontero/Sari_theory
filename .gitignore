@@ -1,0 +1,18 @@
+.venv/
+cache/
+results/
+__pycache__/
+
+# LaTeX build files and the built notes
+notes/*.aux
+notes/*.log
+notes/*.out
+notes/*.fls
+notes/*.fdb_latexmk
+notes/*.synctex.gz
+notes/*.bbl
+notes/*.blg
+notes/main.pdf
+
+# arXiv PDFs (gitignored until decided otherwise)
+papers/pdf/

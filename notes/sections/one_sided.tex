@@ -1,0 +1,10 @@
+\section{One-sided guarantees}\label{sec:one-sided}
+
+Write $R^+_P(r)=\mathbb P(\hat Y=1\mid Y=0)$.
+This mirrors trustable verification in \citet{balcan2025verifiers}.
+
+\begin{proposition}[Realisable false-positive control]\label{prop:one-sided}
+$S_2$ contains $m_-$ negatives.
+Among candidates with no false positive on them, let $\hat r$ have the smallest empirical false-negative rate.
+If some candidate has $R^+_P=0$, then with probability at least $1-\delta$, $R^+_P(\hat r)\le\log(k/\delta)/m_-$.
+\end{proposition}
