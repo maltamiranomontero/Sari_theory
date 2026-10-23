@@ -1,0 +1,7 @@
+requests
+numpy
+pandas
+matplotlib
+tqdm
+# optional, for the LLM prior in example2 (see README):
+# llama-cpp-python   (CMAKE_ARGS="-DGGML_METAL=on" pip install llama-cpp-python)
