@@ -1,0 +1,28 @@
+\section{Setup}\label{sec:setup}
+
+Let $\mathcal X$ be an input space and $\mathcal Y=\{0,1\}$.
+A task is a distribution $P$ on $\mathcal X\times\mathcal Y$.
+Let $\mathcal R\subset\Sigma^*$ be a countable set of strings over a finite alphabet $\Sigma$, called prompts or rubrics.
+
+\begin{definition}[LLM classifier]\label{def:llm-classifier}
+A fixed language model $M$ assigns to each $r\in\mathcal R$ and $x\in\mathcal X$ a distribution $M(\cdot\mid r,x)$ on $\mathcal Y$.
+The loss is $\ell(r,z)=1-M(y\mid r,x)\in[0,1]$ for $z=(x,y)$.
+The risk is $R_P(r)=\mathbb E_{Z\sim P}\,\ell(r,Z)$.
+The empirical risk on $S=(Z_1,\dots,Z_n)$ is $\hat R_S(r)=n^{-1}\sum_i\ell(r,Z_i)$.
+The sampled indicator $\mathbb 1\{\hat Y_i\neq Y_i\}$ with $\hat Y_i\sim M(\cdot\mid r,X_i)$ has the same mean and range, and all bounds hold for it.
+\end{definition}
+% TODO(check): ollama_client.py obtains M(.|r,x) from the top-20 log-probabilities of the first generated token.
+% It merges variants of "0" and "1" with a leading space, renormalises over {0,1}, and gives a label absent from the top 20 the smallest returned log-probability minus log 2.
+% This is a valid M in the sense of the definition, but M then depends on the top-20 truncation.
+
+\begin{definition}[Data-independent prompt]\label{def:data-independent}
+$r_H\in\mathcal R$ is data-independent if it is fixed, or random and independent of the sample.
+It may depend on a task description shared across tasks.
+\end{definition}
+
+\begin{definition}[Rubric procedure]\label{def:rubric-procedure}
+Split an i.i.d.\ sample from $P$ into $S_1$ (size $n_1$) and $S_2$ (size $m$).
+A proposal kernel $Q$ maps $S_1$ to a distribution $Q(\cdot\mid S_1)$ on $\mathcal R$.
+Conditionally on $S_1$ draw $r_1,\dots,r_k$ i.i.d.\ from $Q(\cdot\mid S_1)$ and return $\hat r\in\arg\min_j\hat R_{S_2}(r_j)$.
+Write $\varepsilon_m(k,\delta)=\sqrt{2\log(2k/\delta)/m}$.
+\end{definition}

@@ -95,3 +95,24 @@ candidates on the test set) or pass fewer `--seeds`.
   and the tokens of r are teacher-forced and summed (nats). No end-of-turn token is
   included. For Llama-3 templates, the prefix contains today's date, so the prior
   changes slightly from day to day. Qwen2.5's template does not do this.
+
+## Project layout
+
+| Path | Contents |
+|---|---|
+| `config.py`, `data.py`, `cache.py`, `ollama_client.py`, `rubric.py`, `prior.py`, `plotting.py` | Experiment code (see Files above) |
+| `example1.py`, `example2.py` | The two experiments |
+| `notes/` | LaTeX notes on the theory (`main.tex`, `sections/`, `appendix_proofs.tex`, `refs.bib`) |
+| `papers/` | Reading list (`papers/README.md`); arXiv PDFs in `papers/pdf/` (gitignored) |
+| `talks/` | The two Simons Institute talks that motivate the project |
+| `open_questions.md` | Open questions |
+
+## Building the notes
+
+Requires a TeX distribution with `latexmk`.
+
+```bash
+cd notes
+make          # latexmk -pdf main.tex, produces notes/main.pdf
+make clean    # remove build files
+```

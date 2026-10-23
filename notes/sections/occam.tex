@@ -1,0 +1,27 @@
+\section{Occam bound under the LLM prior}\label{sec:occam}
+
+Let $\pi$ be a distribution on $\mathcal R$ fixed before seeing data, for example $\pi(r)=M(r\mid\text{description})$.
+% TODO(check): M(r | description) is a distribution on R only if it includes the probability of ending the string after r.
+% prior.py omits the end-of-text token (see the Experiments section).
+
+\begin{proposition}[Occam bound under the LLM prior]\label{prop:occam}
+With probability at least $1-\delta$, for all $r$, $R_P(r)\le\hat R_S(r)+\sqrt{(\log(1/\pi(r))+\log(1/\delta))/(2n)}$.
+\end{proposition}
+
+\begin{corollary}[Oracle inequality]\label{cor:oracle}
+Let $B_\delta(r)$ be the square-root term and $\tilde r$ minimise $\hat R_S(r)+B_{\delta/2}(r)$.
+For every fixed $r^\star$, with probability at least $1-\delta$, $R_P(\tilde r)\le R_P(r^\star)+2\sqrt{(\log(1/\pi(r^\star))+\log(2/\delta))/(2n)}$.
+\end{corollary}
+
+The sample complexity is of order $\varepsilon^{-2}\{\log(1/\pi(r^\star))+\log(1/\delta)\}$.
+It depends on the description length of a good rubric under the LLM, not on the number of model parameters.
+Taking $r^\star=r_H$ compares with the human prompt.
+
+\begin{proposition}[PAC-Bayes and Gibbs posterior]\label{prop:pac-bayes}
+With probability at least $1-\delta$, for all $\rho$, $\mathbb E_\rho R_P\le\mathbb E_\rho\hat R_S+\sqrt{(\mathrm{KL}(\rho\|\pi)+\log(2\sqrt n/\delta))/(2n)}$ \citep{maurer2004note}.
+The Gibbs posterior $\rho_\lambda(r)\propto\pi(r)\exp\{-\lambda n\hat R_S(r)\}$ minimises $\mathbb E_\rho\hat R_S+\mathrm{KL}(\rho\|\pi)/(\lambda n)$.
+\end{proposition}
+% TODO(check): Theorem 5 of maurer2004note assumes n >= 8, which the statement omits.
+
+It is an open question whether prompting the LLM with $S$ samples approximately from $\rho_\lambda$.
+That would place the procedure inside generalised Bayesian inference \citep{bissiri2016general}.

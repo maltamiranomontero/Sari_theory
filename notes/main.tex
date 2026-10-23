@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+
+\usepackage[british]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[round]{natbib}
+\usepackage[hidelinks]{hyperref}
+
+% Theorem environments, numbered within section with a shared counter.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\title{When do data-generated rubrics beat handcrafted prompts?}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+Language models are increasingly used as subroutines inside learning agents.
+\citet{mitchell2026talk} describes such agents, which write rubrics from training data and then use them to label new inputs.
+\citet{balcan2026talk} and \citet{balcan2025verifiers} develop a PAC framework for learning verifiers.
+We combine the two views.
+We treat a rubric as a hypothesis, the language model as a fixed map from rubrics to classifiers, and the generation of rubrics from data as a learning algorithm.
+Our goal is to show when data-generated rubrics provably beat handcrafted prompts.
+
+\input{sections/setup}
+\input{sections/selection}
+\input{sections/separation}
+\input{sections/occam}
+\input{sections/one_sided}
+
+\section{Experiments}\label{sec:experiments}
+
+\texttt{example1.py} illustrates Theorem~\ref{thm:separation} and Lemma~\ref{lem:confusable}.
+It generates short item descriptions with independent uniform attributes in \texttt{data.py}, and three hidden rules on these attributes define a confusable family as in Definition~\ref{def:confusable}.
+% TODO(check): the code estimates Delta as half the smallest pairwise disagreement on the held-out test inputs, not under P_X itself.
+For each task it evaluates a few fixed handcrafted prompts, which are data-independent, and runs the rubric procedure of \texttt{rubric.py} with the language model as proposal kernel $Q$.
+% TODO(check): R_P is replaced everywhere by the average loss on a fixed held-out test set, which is shared across tasks and seeds.
+It reports the risk of $\hat r$ and of the best candidate, and estimates $p$ by the fraction of the $k$ candidates whose risk is at most $\varepsilon_0$.
+It then counts the tasks on which each handcrafted prompt has risk below $\Delta$ and compares the largest gap in risk between the handcrafted prompt and $\hat r$ with $\Delta-\varepsilon_0-\varepsilon_m$.
+% TODO(check): the code compares with Delta - eps0 - eps_m(k, delta), whereas Theorem thm:separation uses eps_m(k, delta/3).
+% TODO(check): the code uses the mean of R(r_hat) over seeds, whereas the theorem is a high-probability statement for a single run.
+% TODO(results): one bar plot per task comparing the handcrafted prompts with r_hat and the best candidate.
+
+\texttt{example2.py} fixes one task.
+Part (a) illustrates Proposition~\ref{prop:selection}.
+It keeps $n_1$ and $k$ fixed, varies $m$, and compares the excess risk $R_P(\hat r)-\min_jR_P(r_j)$ over several seeds with $\varepsilon_m(k,\delta)$.
+% TODO(results): excess risk against m, with eps_m(k, delta) on the same axes.
+Part (b) illustrates Proposition~\ref{prop:occam} and Corollary~\ref{cor:oracle}.
+It computes $\log(1/\pi(r))$ in \texttt{prior.py} as the negative log-probability of the rubric text under the same model, given only the task description.
+% TODO(check): prior.py sums the log-probabilities of the tokens of r without an end-of-text token, so pi is not normalised over R and Proposition prop:occam does not apply as stated.
+% TODO(check): without llama-cpp-python, prior.py uses log(1/pi(r)) = (c+1) log 2 + c log 128, which sums to at most one only if Sigma has at most 128 symbols, and generated rubrics may contain other characters.
+For a pool of generated rubrics and handcrafted prompts it evaluates the bound on a fresh sample for several $n$, the fraction of rubrics whose risk lies below their bound, and the rubric $\tilde r$ with the smallest bound.
+% TODO(check): the code selects r_tilde by minimising hat R_S + B_delta, whereas Corollary cor:oracle minimises hat R_S + B_{delta/2}.
+% TODO(check): the code reports the fraction of covered rubrics, whereas Proposition prop:occam bounds the probability that all rubrics are covered.
+% TODO(results): scatter of log(1/pi(r)) against risk, and R(r_tilde) with the bound at r_tilde against n.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\appendix
+\input{appendix_proofs}
+
+\end{document}

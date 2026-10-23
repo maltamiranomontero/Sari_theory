@@ -1,0 +1,57 @@
+\section{Proofs}\label{app:proofs}
+
+\begin{proof}[Proof of Proposition~\ref{prop:selection}]
+Condition on $S_1,r_1,\dots,r_k$.
+Hoeffding and a union bound give $|\hat R_{S_2}(r_j)-R_P(r_j)|\le\sqrt{\log(2k/\delta)/(2m)}$ for all $j$.
+Then
+%
+\[
+R_P(\hat r)\le\hat R_{S_2}(\hat r)+\tfrac12\varepsilon_m\le\hat R_{S_2}(r_{j^\star})+\tfrac12\varepsilon_m\le R_P(r_{j^\star})+\varepsilon_m.
+\qedhere
+\]
+\end{proof}
+% TODO(check): j^star is not defined in the source. It is presumably an index attaining min_j R_P(r_j).
+
+\begin{proof}[Proof of Corollary~\ref{cor:human-in-pool}]
+\emph{To be written.}
+% TODO(check): no proof supplied in the source.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:competitiveness}]
+No candidate in $A_\eta$ has probability at most $(1-p)^k\le e^{-pk}\le\delta/3$.
+Apply Proposition~\ref{prop:selection} at level $\delta/3$ and a union bound.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:confusable}]
+Where $f_\theta\ne f_{\theta'}$ the labels differ, so $M(f_\theta(x)\mid r,x)+M(f_{\theta'}(x)\mid r,x)\le1$ and the two losses sum to at least one.
+Hence $R_{P_\theta}(r)+R_{P_{\theta'}}(r)\ge2\Delta$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:lower-bound}]
+\emph{To be written.}
+% TODO(check): no proof supplied in the source.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:separation}]
+\emph{To be written.}
+% TODO(check): no proof supplied in the source.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:occam}]
+Hoeffding at level $\delta\pi(r)$ and a union bound.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:oracle}]
+\emph{To be written.}
+% TODO(check): no proof supplied in the source.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:pac-bayes}]
+\emph{To be written.}
+% TODO(check): no proof supplied in the source. The first part is cited from maurer2004note.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:one-sided}]
+A candidate with $R^+_P>\varepsilon$ survives with probability at most $e^{-\varepsilon m_-}$.
+Union over $k$ and set $\varepsilon=\log(k/\delta)/m_-$.
+\end{proof}
